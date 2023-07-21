@@ -1,0 +1,18 @@
+.resetScreen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.resetScreen h1 {
+  font-size: 8rem;
+  line-height: 1;
+}
+
+.resetScreen h2 {
+  margin-bottom: 6rem;
+  font-size: 2.25rem;
+  line-height: 2.50rem;
+}
