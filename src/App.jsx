@@ -18,22 +18,24 @@ const stages = [
 ]
 
 const modes = [
-  { id: 1, name: 'Muito Fácil', percentage: 10 },
-  { id: 2, name: 'Fácil', percentage: 20 },
-  { id: 3, name: 'Médio', percentage: 30 },
-  { id: 4, name: 'Difícil', percentage: 40 },
-  { id: 5, name: 'Muito Difícil', percentage: 50 },
-  { id: 6, name: 'Hiper Difícil', percentage: 60 },
-  { id: 7, name: 'Mega Difícil', percentage: 70 },
-  { id: 8, name: 'Omega Difícil', percentage: 80 },
-  { id: 9, name: 'Impossível', percentage: 90 },
+  { id: 1, name: 'Muito Fácil', percentage: 10, fator: 0.1 },
+  { id: 2, name: 'Fácil', percentage: 20, fator: 0.115 },
+  { id: 3, name: 'Médio', percentage: 30, fator: 0.3 },
+  { id: 4, name: 'Difícil', percentage: 40, fator: 1.2 },
+  { id: 5, name: 'Muito Difícil', percentage: 50, fator: 1.5 },
+  { id: 6, name: 'Hiper Difícil', percentage: 60, fator: 1.8 },
+  { id: 7, name: 'Mega Difícil', percentage: 70, fator: 2.1 },
+  { id: 8, name: 'Omega Difícil', percentage: 80, fator: 2.4 },
+  { id: 9, name: 'Impossível', percentage: 90, fator: 2.7 },
 ]
 
 function App() {
 
   const [gameStage, setGameStage] = useState(stages[0].name)
   const [gameMode, setGameMode] = useState()
+  const [percentage, setPercentage] = useState()
   const [difficulty, setDifficulty] = useState('')
+  const [multiply, setMultiply] = useState()
 
   const [squares, setSquares] = useState([])
   const [clickedSquares, setClickedSquares] = useState([])
@@ -71,18 +73,19 @@ function App() {
   // starts the miners game
   const startGame = () => {
     setGameStage(stages[1].name)
+    setScores(50)
   }
 
   // select mode
-  const modeSelected = (selectedMode, nameDifficulty, percentage) => {
-    setGameMode(selectedMode)
-    console.log(nameDifficulty)
-    setDifficulty(nameDifficulty)
-
+  const modeSelected = (selectedMode, nameDifficulty, percentage, fatorMultiply) => {
     const emptyArray = generateEmptyArray()
     const bombsPositions = generateBombsPositions(percentage)
     const arrayWithBombsInserteds = insertRandomBomb(emptyArray, bombsPositions)
 
+    setMultiply(fatorMultiply)
+    setGameMode(selectedMode)
+    setPercentage(percentage)
+    setDifficulty(nameDifficulty)
     setSquares(arrayWithBombsInserteds)
     setGameStage(stages[2].name)
   }
@@ -102,17 +105,12 @@ function App() {
         return alert('Não é possível selecionar o mesmo campo!')
       }
       console.log('você clicou fora da bomba')
-      
-      const baseMultiplier = 0.3
-      const maxMultiplier = 5
-      const multiplier = baseMultiplier + (maxMultiplier - baseMultiplier) * (gameMode - 1) / 8
 
-      const points = 1
-      const newScore = scores + points * multiplier
-      console.log(newScore)
+      const newScore = Number(scores) + (Number(scores) * multiply)
 
-      setScores(newScore)
+      console.log(newScore);
 
+      setScores(newScore.toFixed(2))
     }
   }
 
@@ -143,6 +141,8 @@ function App() {
           difficulty={difficulty}
           verifyBomb={verifyBomb}
           squares={squares}
+          scores={scores}
+          setScores={setScores}
         />
       }
 
