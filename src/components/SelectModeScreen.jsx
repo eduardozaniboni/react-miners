@@ -14,7 +14,7 @@ const SelectMode = ({ modes, modeSelected }) => {
             key={mode.id}
             name={mode.name}
             percentage={mode.percentage}
-            modeSelected={() => modeSelected(mode.id, mode.name, mode.percentage)}
+            modeSelected={() => modeSelected(mode.id, mode.name, mode.percentage, mode.fator)}
           />
         ))}
       </div>

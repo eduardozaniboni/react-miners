@@ -1,14 +1,11 @@
 import './Game.css'
 
-const Game = ({ verifyBomb, squares, difficulty }) => {
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-  }
+const Game = ({ verifyBomb, squares, difficulty, scores }) => {
 
   return (
     <div className='container'>
       <h1>Dificuldade: {difficulty}</h1>
+      <h2>Pontos: {scores}</h2>
       <div className='bombSquares'>
         {squares.map((value, index) => (
           <button
@@ -22,10 +19,18 @@ const Game = ({ verifyBomb, squares, difficulty }) => {
           </button>
         ))}
       </div>
-      <form onSubmit={handleSubmit} className='valueForm'>
-        <input className='valueInput' type="text" name="value" id="value" />
+      {/* <form onSubmit={handleSubmit} className='scoreForm'>
+        <input
+          className='scoreInput'
+          type="number"
+          name="score"
+          required
+          onChange={(e) => defineScore(e.target.value)}
+          value={scores}
+          autoComplete='false'
+        />
         <button>Jogar!</button>
-      </form>
+      </form> */}
     </div>
   )
 }
